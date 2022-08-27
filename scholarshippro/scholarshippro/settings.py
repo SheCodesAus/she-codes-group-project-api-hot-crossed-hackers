@@ -18,6 +18,7 @@ SECRET_KEY = os.environ.get('DJANGO_SECRET_KEY','wphf&)k)(^3c@ygxf*p(!w=8yx&=epw
 DEBUG = False
 
 ALLOWED_HOSTS = ['*']
+# sarah is awesome 
 
 
 # Application definition
