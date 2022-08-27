@@ -1,0 +1,1 @@
+web: gunicorn --pythonpath scholarshippro scholarshippro.wsgi --log-file -
