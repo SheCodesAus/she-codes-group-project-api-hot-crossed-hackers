@@ -31,6 +31,7 @@ class ScholarshipsList(APIView):
         )
 
 
+
 class ScholarshipDetail(APIView):
 
     def get_object(self, pk):
