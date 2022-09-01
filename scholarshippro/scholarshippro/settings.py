@@ -33,13 +33,14 @@ INSTALLED_APPS = [
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
+    'users.apps.UsersConfig'
 ]
 
 REST_FRAMEWORK = {
     'DEFAULT_AUTHENTICATION_CLASSES': [
-        'rest_framework.authentication.TokenAuthentication',
-    ]
-}
+
+AUTH_USER_MODEL = 'users.CustomUser'
+
 
 MIDDLEWARE = [ 
     'django.middleware.security.SecurityMiddleware',
