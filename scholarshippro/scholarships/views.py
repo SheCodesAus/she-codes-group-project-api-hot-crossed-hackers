@@ -6,7 +6,8 @@ from rest_framework.response import Response
 from .models import Scholarships
 from.serializers import ScholarshipSerializer
 from django.http import Http404
-from rest_framework import status
+from rest_framework import status, permissions
+from .permissions import IsOwnerOrReadOnly
 
 class ScholarshipsList(APIView):
 
@@ -34,9 +35,13 @@ class ScholarshipsList(APIView):
 
 class ScholarshipDetail(APIView):
 
+    permission_classes = [permissions.IsAuthenticatedOrReadOnly, IsOwnerOrReadOnly]
+
     def get_object(self, pk):
         try:
-            return Scholarships.object.get(pk=pk)
+            scholarship = Scholarships.object.get(pk=pk)
+            self.check_object_permissions(self.request, scholarship)
+            return scholarship
         except Scholarships.DoesNotExist:
             raise Http404
 
@@ -44,5 +49,17 @@ class ScholarshipDetail(APIView):
         scholarship = self.get_object(pk)
         serializer = ScholarshipSerializer(scholarship)
         return Response(serializer.data)
+
+    def put(self, request, pk):
+        scholarships = self.get_object(pk)
+        data = request.data
+        serializer = ScholarshipSerializer(
+            instance=scholarships, 
+            data=data, 
+            partial=True
+        )
+        if serializer.is_valid():
+            serializer.save()
+
 
         
