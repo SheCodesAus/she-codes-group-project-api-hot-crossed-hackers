@@ -15,23 +15,34 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 SECRET_KEY = os.environ.get('DJANGO_SECRET_KEY','wphf&)k)(^3c@ygxf*p(!w=8yx&=epwo!*w1_n-#*(d7hcou4^(7')
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = False
+DEBUG = True
 
 ALLOWED_HOSTS = ['*']
+# sarah is awesome 
 
 
 # Application definition
 
 INSTALLED_APPS = [
+    'scholarships.apps.ScholarshipsConfig',
+    'rest_framework',
+    'rest_framework.authtoken',
     'django.contrib.admin',
     'django.contrib.auth',
     'django.contrib.contenttypes',
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
+    'users.apps.UsersConfig'
 ]
 
-MIDDLEWARE = [
+REST_FRAMEWORK = {
+    'DEFAULT_AUTHENTICATION_CLASSES': [
+
+AUTH_USER_MODEL = 'users.CustomUser'
+
+
+MIDDLEWARE = [ 
     'django.middleware.security.SecurityMiddleware',
     'whitenoise.middleware.WhiteNoiseMiddleware',
     'django.contrib.sessions.middleware.SessionMiddleware',
