@@ -9,11 +9,10 @@ class ScholarshipSerializer(serializers.Serializer):
     image = serializers.URLField()
     url = serializers.CharField(max_length=200)
     closing_date = serializers.DateTimeField()
-    owner = serializers.ReadOnlyField()
+    owner = serializers.ReadOnlyField(source='owner.id')
 
     def create (self, validated_data):
         return Scholarships.objects.create(**validated_data)
-
 
 class ScholarshipDetailSerializer(ScholarshipSerializer):
 
@@ -27,3 +26,4 @@ class ScholarshipDetailSerializer(ScholarshipSerializer):
         instance.owner = validated_data.get('owner', instance.owner)
         instance.save()
         return instance
+
