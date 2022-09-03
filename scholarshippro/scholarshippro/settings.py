@@ -25,7 +25,7 @@ ALLOWED_HOSTS = ['*']
 
 INSTALLED_APPS = [
     'scholarships.apps.ScholarshipsConfig',
-    # 'rest_framework.authtoken',
+    'rest_framework.authtoken',
     'rest_framework',
     'django.contrib.admin',
     'django.contrib.auth',
@@ -36,11 +36,11 @@ INSTALLED_APPS = [
     'users.apps.UsersConfig'
 ]
 
-# REST_FRAMEWORK = {
-#     'DEFAULT_AUTHENTICATION_CLASSES': [
-#     'rest_framework.authentication.TokenAuthentication',
-#     ]
-#     }
+REST_FRAMEWORK = {
+    'DEFAULT_AUTHENTICATION_CLASSES': [
+    'rest_framework.authentication.TokenAuthentication',
+    ]
+}
 
 AUTH_USER_MODEL = 'users.CustomUser'
 
