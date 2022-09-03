@@ -1,4 +1,3 @@
-from pyexpat import model
 from rest_framework import serializers
 from .models import Scholarships 
 
@@ -27,3 +26,4 @@ class ScholarshipDetailSerializer(ScholarshipSerializer):
         instance.owner = validated_data.get('owner', instance.owner)
         instance.save()
         return instance
+
