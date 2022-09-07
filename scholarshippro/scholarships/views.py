@@ -22,12 +22,12 @@ class ScholarshipsList(APIView):
                 esol = categories.get('esol', Scholarships.ESOL.ANY)
                 duration = categories.get('duration', Scholarships.Duration.ANY)
                 scholarship = Scholarships.objects.filter(
-                    gender=gender,
-                    indigenous_status=indigenous_status,
-                    vision_impairment=vision_impairment,
-                    low_income=low_income,
-                    esol=esol,
-                    duration=duration
+                    gender__in=[Scholarships.Gender.ANY, gender],
+                    indigenous_status__in=[Scholarships.IndigenousStatus.ANY, indigenous_status],
+                    vision_impairment__in=[Scholarships.VisionImpairment.ANY, vision_impairment],
+                    low_income__in=[Scholarships.LowIncome.ANY, low_income],
+                    esol__in=[Scholarships.ESOL.ANY, esol],
+                    duration__in=[Scholarships.Duration.ANY, duration]
                 )
                 serializer = ScholarshipSerializer(scholarship, many=True)
             return Response(
