@@ -1,6 +1,5 @@
+from unicodedata import category
 from django.shortcuts import render
-
-# Create your views here.
 from rest_framework.views import APIView
 from rest_framework.response import Response
 from .models import Scholarships
@@ -12,10 +11,28 @@ from .permissions import IsOwnerOrReadOnly
 class ScholarshipsList(APIView):
 
     def get(self, request):
-            scholarship = Scholarships.objects.all()
+            categories = request.query_params
+            if len(categories) == 0:
+                scholarship = Scholarships.objects.all()
+            else:
+                gender = categories.get('gender', Scholarships.Gender.ANY)
+                indigenous_status = categories.get('indigenous_status', Scholarships.IndigenousStatus.ANY)
+                vision_impairment = categories.get('vision_impairment', Scholarships.VisionImpairment.ANY)
+                low_income = categories.get('low_income', Scholarships.LowIncome.ANY)
+                esol = categories.get('esol', Scholarships.ESOL.ANY)
+                duration = categories.get('duration', Scholarships.Duration.ANY)
+                scholarship = Scholarships.objects.filter(
+                    gender__in=[Scholarships.Gender.ANY, gender],
+                    indigenous_status__in=[Scholarships.IndigenousStatus.ANY, indigenous_status],
+                    vision_impairment__in=[Scholarships.VisionImpairment.ANY, vision_impairment],
+                    low_income__in=[Scholarships.LowIncome.ANY, low_income],
+                    esol__in=[Scholarships.ESOL.ANY, esol],
+                    duration__in=[Scholarships.Duration.ANY, duration]
+                )
             serializer = ScholarshipSerializer(scholarship, many=True)
             return Response(
-                serializer.data)
+                serializer.data
+            )
                 
 
     def post(self, request):
@@ -30,8 +47,7 @@ class ScholarshipsList(APIView):
             serializer.errors,
             status=status.HTTP_400_BAD_REQUEST
         )
-
-
+        
 
 class ScholarshipDetail(APIView):
 
@@ -79,5 +95,3 @@ class ScholarshipDetail(APIView):
             status=status.HTTP_401_UNAUTHORIZED
         )
 
-
-        
