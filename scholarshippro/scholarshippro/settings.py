@@ -18,6 +18,7 @@ SECRET_KEY = os.environ.get('DJANGO_SECRET_KEY','wphf&)k)(^3c@ygxf*p(!w=8yx&=epw
 DEBUG = True
 
 ALLOWED_HOSTS = ['*']
+CORS_ALLOW_ALL_ORIGINS = True
 # sarah is awesome 
 
 
@@ -26,6 +27,7 @@ ALLOWED_HOSTS = ['*']
 INSTALLED_APPS = [
     'scholarships.apps.ScholarshipsConfig',
     'rest_framework.authtoken',
+    'corsheaders',
     'rest_framework',
     'django.contrib.admin',
     'django.contrib.auth',
@@ -46,6 +48,7 @@ AUTH_USER_MODEL = 'users.CustomUser'
 
 
 MIDDLEWARE = [ 
+    'corsheaders.middleware.CorsMiddleware',
     'django.middleware.security.SecurityMiddleware',
     'whitenoise.middleware.WhiteNoiseMiddleware',
     'django.contrib.sessions.middleware.SessionMiddleware',
