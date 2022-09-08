@@ -29,7 +29,7 @@ class ScholarshipsList(APIView):
                     esol__in=[Scholarships.ESOL.ANY, esol],
                     duration__in=[Scholarships.Duration.ANY, duration]
                 )
-                serializer = ScholarshipSerializer(scholarship, many=True)
+            serializer = ScholarshipSerializer(scholarship, many=True)
             return Response(
                 serializer.data
             )
