@@ -37,7 +37,13 @@ class ScholarshipDetailSerializer(ScholarshipSerializer):
         instance.url = validated_data.get('url', instance.url)
         instance.closing_date = validated_data.get('closing_date', instance.closing_date)
         instance.owner = validated_data.get('owner', instance.owner)
-        instance.category = validated_data.get('category',instance.category)
+        instance.eligibility = validated_data.get('eligibility', instance.eligibility)
+        instance.gender = validated_data.get('gender', instance.gender)
+        instance.indigenous_status = validated_data.get('indigenous_status', instance.indigenous_status)
+        instance.vision_impairment = validated_data.get('vision_impairment', instance.vision_impairment)
+        instance.low_income = validated_data.get('low_income',instance.low_income)
+        instance.esol = validated_data.get('esol',instance.esol)
+        instance.duration = validated_data.get('duration',instance.duration)
         instance.save()
         return instance
 
