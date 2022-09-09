@@ -1,3 +1,4 @@
+
 from django.shortcuts import render
 
 # Create your views here.
@@ -37,4 +38,36 @@ class CustomUserDetail(APIView):
         user = self.get_object(pk)
         serializer = CustomUserSerializer(user)
         return Response(serializer.data)
-        
+    
+    def put(self, request, pk):
+
+        user = self.get_object(pk)
+        if user == request.user:
+            data = request.data
+            serializer = CustomUserSerializer(
+                instance=user,
+                data=data,
+                partial=True
+            )
+            if serializer.is_valid():
+                serializer.save()
+                return Response(
+                    serializer.data,
+                    status=status.HTTP_200_OK
+                )
+            return Response(
+                status=status.HTTP_400_BAD_REQUEST
+            )
+        return Response(
+            status=status.HTTP_401_UNAUTHORIZED
+        )
+    
+    def delete(self, request, pk):
+        user = self.get_object(pk)
+        if user == request.user:
+            user.delete()
+            return Response(status=status.HTTP_204_NO_CONTENT)
+        return Response(
+            status=status.HTTP_401_UNAUTHORIZED
+        )
+
