@@ -71,3 +71,15 @@ class CustomUserDetail(APIView):
             status=status.HTTP_401_UNAUTHORIZED
         )
 
+class CustomUserDetailByEmail(APIView):
+    
+    def get_object(self, email):
+        try:
+            return CustomUser.objects.get(email=email)
+        except CustomUser.DoesNotExist:
+            raise Http404
+    
+    def get(self, request, email):
+        user = self.get_object(email)
+        serializer = CustomUserSerializer(user)
+        return Response(serializer.data)
