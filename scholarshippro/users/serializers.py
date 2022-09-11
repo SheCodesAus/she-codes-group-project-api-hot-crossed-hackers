@@ -1,5 +1,7 @@
 from rest_framework import serializers
 from django.http import Http404, HttpResponseBadRequest
+
+from scholarships.models import Scholarships
 from .models import CustomUser
 from django.contrib.auth.hashers import make_password
 class CustomUserSerializer(serializers.Serializer):

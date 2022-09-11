@@ -2,11 +2,14 @@ from unicodedata import category
 from django.shortcuts import render
 from rest_framework.views import APIView
 from rest_framework.response import Response
+
+
 from .models import Scholarships
 from.serializers import ScholarshipSerializer, ScholarshipDetailSerializer
 from django.http import Http404
 from rest_framework import status, permissions
 from .permissions import IsOwnerOrReadOnly
+from django.shortcuts import get_object_or_404
 
 class ScholarshipsList(APIView):
 
@@ -94,4 +97,40 @@ class ScholarshipDetail(APIView):
         return Response(
             status=status.HTTP_401_UNAUTHORIZED
         )
+
+class FavoriteDetail(APIView):
+
+    def get_object(self, pk):
+        try:
+            scholarship = Scholarships.objects.get(pk=pk)
+            return scholarship
+        except Scholarships.DoesNotExist:
+            raise Http404
+
+    def post(self, request, pk):
+        scholarship = self.get_object(pk)
+        
+        if request.user not in scholarship.favorites.all():
+            scholarship.favorites.add(request.user)
+            return Response(
+            status=status.HTTP_201_CREATED
+            )
+        return Response(
+            status=status.HTTP_400_BAD_REQUEST
+        )
+
+    def delete(self, request, pk):
+        scholarship = Scholarships.objects.get(pk=pk)
+        
+        if request.user in scholarship.favorites.all():
+            scholarship.favorites.remove(request.user)
+            return Response(
+            status=status.HTTP_204_NO_CONTENT
+            )
+        return Response(
+            status=status.HTTP_400_BAD_REQUEST
+        )
+
+
+        
 

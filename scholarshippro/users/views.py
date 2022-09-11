@@ -23,9 +23,6 @@ class CustomUserList(APIView):
             return Response(serializer.data)
         return Response(serializer.errors)
 
-
-        
-
 class CustomUserDetail(APIView):
     
     def get_object(self,pk):
@@ -70,4 +67,3 @@ class CustomUserDetail(APIView):
         return Response(
             status=status.HTTP_401_UNAUTHORIZED
         )
-
