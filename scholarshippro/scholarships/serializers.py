@@ -22,7 +22,7 @@ class ScholarshipSerializer(serializers.Serializer):
     low_income = serializers.CharField(max_length=2, required=False)
     esol = serializers.CharField(max_length=2, required=False)
     duration = serializers.CharField(max_length=2, required=False)
-    favorites = serializers.SlugRelatedField(many=True, slug_field='username', queryset=get_user_model().objects.all())
+    
 
     def create (self, validated_data):
         scholarship = Scholarships.objects.create(**validated_data)

@@ -18,7 +18,7 @@ class Scholarships(models.Model):
         on_delete=models.CASCADE,
         related_name='owner_scholarships'
     )
-    favorites = models.ManyToManyField(get_user_model(), related_name='scholarship_favorite', blank=True)
+    
 
     class Gender(models.TextChoices):
         ANY = 'AN', _('Any')

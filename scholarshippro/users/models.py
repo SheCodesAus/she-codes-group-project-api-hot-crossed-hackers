@@ -2,7 +2,7 @@ from django.db import models
 from django.contrib.auth.models import AbstractUser
 from django.core.validators import MaxValueValidator, MinValueValidator
 from django.utils.translation import gettext_lazy as _
-
+from scholarships.models import Scholarships 
 
 # Create your models here.
 
@@ -10,6 +10,7 @@ from django.utils.translation import gettext_lazy as _
 class CustomUser(AbstractUser):
     post_code = models.IntegerField(default=4000)
     year_of_birth = models.IntegerField(default=1990)
+    favorites = models.ManyToManyField(Scholarships, related_name='scholarship_favorite', blank=True)
 
     class Gender(models.TextChoices):
         ANY = 'AN', _('Any')
