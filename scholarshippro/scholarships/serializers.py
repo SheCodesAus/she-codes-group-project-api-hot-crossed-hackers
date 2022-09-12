@@ -47,11 +47,7 @@ class ScholarshipDetailSerializer(ScholarshipSerializer):
         instance.save()
         return instance
 
-# class ScholarshipSerializer(serializers.ModelSerializer):
-#     favorites = 
-#     class Meta:
-#         model = Scholarships
-#         fields = ('title')
+
 
 
 
