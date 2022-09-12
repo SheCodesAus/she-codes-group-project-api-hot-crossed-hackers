@@ -25,7 +25,7 @@ CORS_ALLOW_ALL_ORIGINS = True
 # Application definition
 
 INSTALLED_APPS = [
-    'scholarships.apps.ScholarshipsConfig',
+    # 'scholarships.apps.ScholarshipsConfig',
     'rest_framework.authtoken',
     'corsheaders',
     'rest_framework',
@@ -35,7 +35,8 @@ INSTALLED_APPS = [
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
-    'users.apps.UsersConfig'
+    'users.apps.UsersConfig',
+    'scholarships'
 ]
 
 REST_FRAMEWORK = {

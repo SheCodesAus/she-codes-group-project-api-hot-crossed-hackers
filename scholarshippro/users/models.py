@@ -2,6 +2,7 @@ from django.db import models
 from django.contrib.auth.models import AbstractUser
 from django.core.validators import MaxValueValidator, MinValueValidator
 from django.utils.translation import gettext_lazy as _
+
 # Create your models here.
 
 
@@ -122,7 +123,7 @@ class CustomUser(AbstractUser):
         choices = Industry.choices,
         default=Industry.ANY 
     )   
-
+    favorites = models.ManyToManyField('scholarships.Scholarships', related_name= 'users', blank=True)
 
     def _str_(self):
         return self.username

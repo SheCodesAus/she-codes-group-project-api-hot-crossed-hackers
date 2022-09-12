@@ -1,7 +1,11 @@
 from rest_framework import serializers
 from django.http import Http404, HttpResponseBadRequest
 from .models import CustomUser
+from scholarships.models import Scholarships
 from django.contrib.auth.hashers import make_password
+
+
+
 class CustomUserSerializer(serializers.Serializer):
     id = serializers.ReadOnlyField()
     username = serializers.CharField(max_length=200)
@@ -18,6 +22,7 @@ class CustomUserSerializer(serializers.Serializer):
     industry = serializers.CharField(max_length=2, required=False)
     post_code = serializers.IntegerField(required=False)
     year_of_birth = serializers.IntegerField(required=False)
+    favorites = serializers.SlugRelatedField(many=True, slug_field='scholarship', queryset=Scholarships.objects.all())
 
     def create(self, validate_data):
         try: 
@@ -44,4 +49,3 @@ class CustomUserSerializer(serializers.Serializer):
         instance.save()
         return instance
 
-        

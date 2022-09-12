@@ -5,6 +5,7 @@ from django.db import models
 from django.utils.translation import gettext_lazy as _
 
 
+
 class Scholarships(models.Model):
     title = models.CharField(max_length=200)
     organisation = models.CharField(max_length=200)
@@ -87,3 +88,5 @@ class Scholarships(models.Model):
         choices = Duration.choices,
         default=Duration.ANY 
     )
+
+    
