@@ -2,11 +2,14 @@ from unicodedata import category
 from django.shortcuts import render
 from rest_framework.views import APIView
 from rest_framework.response import Response
+
+
 from .models import Scholarships
 from.serializers import ScholarshipSerializer, ScholarshipDetailSerializer
 from django.http import Http404
 from rest_framework import status, permissions
 from .permissions import IsOwnerOrReadOnly
+from django.shortcuts import get_object_or_404
 
 class ScholarshipsList(APIView):
 
@@ -94,4 +97,8 @@ class ScholarshipDetail(APIView):
         return Response(
             status=status.HTTP_401_UNAUTHORIZED
         )
+
+
+
+        
 

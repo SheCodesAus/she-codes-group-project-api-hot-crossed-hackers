@@ -8,6 +8,7 @@ from rest_framework.response import Response
 from rest_framework import status
 from .models import CustomUser
 from .serializers import CustomUserSerializer
+from scholarships.models import Scholarships 
 
 class CustomUserList(APIView):
 
@@ -22,9 +23,6 @@ class CustomUserList(APIView):
             serializer.save()
             return Response(serializer.data)
         return Response(serializer.errors)
-
-
-        
 
 class CustomUserDetail(APIView):
     
@@ -71,6 +69,36 @@ class CustomUserDetail(APIView):
             status=status.HTTP_401_UNAUTHORIZED
         )
 
+
+class CustomUserFavorites(APIView):
+    
+        def get_object(self,pk):
+            try:
+                scholarship = Scholarships.objects.get(pk=pk)
+                return scholarship
+            except Scholarships.DoesNotExist:
+                raise Http404
+
+        def post(self, request, pk):
+            scholarship = self.get_object(pk)
+
+            if scholarship not in request.user.favorites.all():
+                request.user.favorites.add(scholarship)
+                return Response(status=status.HTTP_201_CREATED)
+            return Response(
+                status=status.HTTP_400_BAD_REQUEST
+            )
+
+        def delete(self, request, pk):
+            scholarship = self.get_object(pk)
+
+            if scholarship in request.user.favorites.all():
+                request.user.favorites.remove(scholarship)
+                return Response(status.HTTP_200_OK)
+            return Response(
+                status=status.HTTP_400_BAD_REQUEST
+            )
+
 class CustomUserDetailByUsername(APIView):
     
     def get_object(self, username):
@@ -83,3 +111,4 @@ class CustomUserDetailByUsername(APIView):
         user = self.get_object(username)
         serializer = CustomUserSerializer(user)
         return Response(serializer.data)
+

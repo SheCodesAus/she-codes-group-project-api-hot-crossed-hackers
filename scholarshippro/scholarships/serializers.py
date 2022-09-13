@@ -1,5 +1,6 @@
 from rest_framework import serializers
 from .models import Scholarships 
+from django.contrib.auth import get_user_model
 
 
 
@@ -21,6 +22,7 @@ class ScholarshipSerializer(serializers.Serializer):
     low_income = serializers.CharField(max_length=2, required=False)
     esol = serializers.CharField(max_length=2, required=False)
     duration = serializers.CharField(max_length=2, required=False)
+    
 
     def create (self, validated_data):
         scholarship = Scholarships.objects.create(**validated_data)
