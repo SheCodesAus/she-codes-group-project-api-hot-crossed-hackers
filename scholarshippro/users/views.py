@@ -69,35 +69,31 @@ class CustomUserDetail(APIView):
             status=status.HTTP_401_UNAUTHORIZED
         )
 
-class FavoriteDetail(APIView):
+class CustomUserFavorites(APIView):
+    
+        def get_object(self,pk):
+            try:
+                scholarship = Scholarships.objects.get(pk=pk)
+                return scholarship
+            except Scholarships.DoesNotExist:
+                raise Http404
 
-    def get_object(self, pk):
-        try:
-            scholarship = Scholarships.objects.get(pk=pk)
-            return scholarship
-        except Scholarships.DoesNotExist:
-            raise Http404
+        def post(self, request, pk):
+            scholarship = self.get_object(pk)
 
-    def post(self, request, pk):
-        scholarship = self.get_object(pk)
-        
-        if scholarship not in request.user:
-            request.user.add(scholarship)
+            if scholarship not in request.user.favorites.all():
+                request.user.favorites.add(scholarship)
+                return Response(status=status.HTTP_201_CREATED)
             return Response(
-            status=status.HTTP_201_CREATED
+                status=status.HTTP_400_BAD_REQUEST
             )
-        return Response(
-            status=status.HTTP_400_BAD_REQUEST
-        )
 
-    def delete(self, request, pk):
-        scholarship = Scholarships.objects.get(pk=pk)
-        
-        if scholarship in request.user:
-            request.user.remove(scholarship)
+        def delete(self, request, pk):
+            scholarship = self.get_object(pk)
+
+            if scholarship in request.user.favorites.all():
+                request.user.favorites.remove(scholarship)
+                return Response(status.HTTP_200_OK)
             return Response(
-            status=status.HTTP_204_NO_CONTENT
+                status=status.HTTP_400_BAD_REQUEST
             )
-        return Response(
-            status=status.HTTP_400_BAD_REQUEST
-        )
