@@ -18,6 +18,7 @@ class Scholarships(models.Model):
         on_delete=models.CASCADE,
         related_name='owner_scholarships'
     )
+    
 
     class Gender(models.TextChoices):
         ANY = 'AN', _('Any')
