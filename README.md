@@ -21,11 +21,11 @@ According to the current state of the application, the following features are av
 - The ability to return all the scholarships.
 - The ability to return specific scholarship via an ID number
 - The ability to filter via categories the scholarships:
-            - ESOL
-            - GENDER
-            - ABORIGINAL/TORRES STRAIGHT
-            - LOW INCOME
-            - VISION IMPAIRED
+  - ESOL
+  - GENDER
+  - ABORIGINAL/TORRES STRAIGHT
+  - LOW INCOME
+  - VISION IMPAIRED
 - The ability to return a particular favorite scholarship of a user using an ID number
 - The ability to return demographic information of users.
 - Implement appropriate authentication and authorization using Token Authentication.
