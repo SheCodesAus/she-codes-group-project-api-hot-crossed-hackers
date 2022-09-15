@@ -20,7 +20,7 @@ class CustomUserSerializer(serializers.Serializer):
     industry = serializers.CharField(max_length=2, required=False)
     post_code = serializers.IntegerField(required=False)
     year_of_birth = serializers.IntegerField(required=False)
-    favorites = serializers.SlugRelatedField(many=True, slug_field='title', queryset=Scholarships.objects.all())
+    favorites = serializers.SlugRelatedField(many=True, required=False,  slug_field='title', queryset=Scholarships.objects.all())
 
 
 
